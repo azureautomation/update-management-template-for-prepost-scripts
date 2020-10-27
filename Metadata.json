@@ -1,0 +1,20 @@
+{
+    "Author": "Azure Automation Product Team",
+    "ContentSize": 2600,
+    "ContentUrl": "https://raw.githubusercontent.com/azureautomation/update-management-template-for-prepost-scripts/master/UpdateManagement-Template.ps1",
+    "DownloadCount": 2139,
+    "Id": "Update-Management-Template-d2cb81a0",
+    "IsFederated": true,
+    "IsWorkflow": false,
+    "Popularity": 42,
+    "RaterCount": 1,
+    "Rating": 5.0,
+    "ReleaseDate": "2018-9-14T00:00:00",
+    "RunbookKind": 5,
+    "RunbookKindString": "PowerShell",
+    "Summary": "This is a template script for Update Management pre/post actions. It contains a basic list of common tasks and can be used to write your own scripts.",
+    "Title": "Update Management - Template for Pre/Post Scripts",
+    "UpdatedDate": "2018-9-22T00:00:00",
+    "Url": "https://github.com/azureautomation/update-management-template-for-prepost-scripts",
+    "UserTags": "Patching"
+}
