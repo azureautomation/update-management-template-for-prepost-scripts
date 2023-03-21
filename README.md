@@ -5,6 +5,9 @@
 
 This is a template script for Update Management pre/post actions. It contains a basic list of common tasks and can be used to write your own scripts. 
 
+UpdateManagement-Template.ps1 requires a RunAs account.
+
+AzUpdateManagement-Template.ps1 uses Az cmdlets and System Managed Identity.
 
 It shows how to take the SoftwareUpdateConfigurationRunContext parameter, how to parse and access properties of that parameter, and some starter code to help store information about your script in Automation Variables. 
 
