@@ -1,7 +1,7 @@
-
+﻿
 <#PSScriptInfo
 
-.VERSION 1.1
+.VERSION 1.2
 
 .GUID 5a1ed24c-9099-4921-a135-bfc13213619b
 
@@ -46,7 +46,7 @@
 
 .DESCRIPTION
   This script is intended to be run as a part of Update Management Pre/Post scripts. 
-  It requires a RunAs account.
+  It requires a System Managed Identity.
 
 .PARAMETER SoftwareUpdateConfigurationRunContext
   This is a system variable which is automatically passed in by Update Management during a deployment.
@@ -56,16 +56,9 @@ param(
     [string]$SoftwareUpdateConfigurationRunContext
 )
 #region BoilerplateAuthentication
-#This requires a RunAs account
-$ServicePrincipalConnection = Get-AutomationConnection -Name 'AzureRunAsConnection'
-
-Add-AzureRmAccount `
-    -ServicePrincipal `
-    -TenantId $ServicePrincipalConnection.TenantId `
-    -ApplicationId $ServicePrincipalConnection.ApplicationId `
-    -CertificateThumbprint $ServicePrincipalConnection.CertificateThumbprint
-
-$AzureContext = Select-AzureRmSubscription -SubscriptionId $ServicePrincipalConnection.SubscriptionID
+#This requires a System Managed Identity
+$AzureContext = (Connect-AzAccount -Identity).context
+$AzureContext = Set-AzContext -SubscriptionName $AzureContext.Subscription -DefaultProfile $AzureContext
 #endregion BoilerplateAuthentication
 
 Write-Output "Input: $SoftwareUpdateConfigurationRunContext"
@@ -84,12 +77,12 @@ Write-Output "Azure VMs: $VmIds"
 #Example: How to create and write to a variable using the pre-script:
 <#
 #Create variable named after this run so it can be retrieved
-New-AzureRmAutomationVariable -ResourceGroupName $ResourceGroup –AutomationAccountName $AutomationAccount –Name $runId -Value "" –Encrypted $false
+New-AzAutomationVariable -ResourceGroupName $ResourceGroup –AutomationAccountName $AutomationAccount –Name $runId -Value "" –Encrypted $false
 #Set value of variable 
-Set-AutomationVariable –Name $runId -Value $vmIds
+Set-AzAutomationVariable –Name $runId -Value $vmIds -ResourceGroupName $ResourceGroup –AutomationAccountName $AutomationAccount –Encrypted $false
 #>
 
 #Example: How to retrieve information from a variable set during the pre-script
 <#
-$variable = Get-AutomationVariable -Name $runId
+$variable = Get-AzAutomationVariable -Name $runId -ResourceGroupName $ResourceGroup -AutomationAccountName $AutomationAccount
 #> 
